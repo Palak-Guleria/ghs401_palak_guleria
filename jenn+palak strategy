@@ -1,0 +1,218 @@
+ public void playerBlackStrategy()
+    {
+        playerBlack = "Gary <3";  //put player1 name here
+        showText(playerBlack,70,100); //shows your name
+        GreenfootImage image1 = new GreenfootImage("black.png"); //sets image to black checker
+        String colorInitial = new String("b"); //fills the 2d array grid with this value
+        if(checkWinningPlayBlack() != 200){
+            placeCol(checkWinningPlayBlack(),colorInitial,image1);
+        }else if(checkWinningPlayRed() != 200)
+        {
+            placeCol(checkWinningPlayRed(),colorInitial,image1); 
+        }
+        else
+        {
+            int colToPlace = (int)(Math.random()*7);
+        
+            placeCol(colToPlace,colorInitial,image1);
+        }
+        
+    }
+    
+    public int checkWinningPlayRed()
+    {
+        String colorOpposite = new String("r");
+       
+        for(int r = grid.length-1; r >= 0; r--)
+        {
+            for(int c = grid[0].length-1; c >=0; c--)
+            {
+                //horizontal check
+                if(c<6 && c>2)
+                {
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r][c-1]!= null && grid[r][c-1].equals(colorOpposite) && grid[r][c-2]!= null && grid[r][c-2].equals(colorOpposite))
+                    {
+                        if(grid[r][c-3] == null )
+                        {
+                            return c-3;
+                        }
+                        else if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                if(c<5 && c>1){
+                    if(grid[r][c+1] != null && grid[r][c+1].equals(colorOpposite) && grid[r][c-1] != null && grid[r][c-1].equals(colorOpposite) && grid[r][c-2] != null && grid[r][c-2].equals(colorOpposite))
+                    {
+                        if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                if(c<5 && c>1){
+                    if(grid[r][c+1] != null && grid[r][c+1].equals(colorOpposite) && grid[r][c+2] != null && grid[r][c+2].equals(colorOpposite) && grid[r][c-1] != null && grid[r][c-1].equals(colorOpposite))
+                    {
+                        if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                //vertical check
+                if(r>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-1][c] != null && grid[r-1][c].equals(colorOpposite) && grid[r-2][c] != null && grid[r-2][c].equals(colorOpposite) && grid[r-3][c] == null)
+                    {
+                        return c;
+                    }
+                }
+                //diagonal check
+                if(r>2 && c>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorOpposite) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorOpposite)){ //fourth spot empty
+                        if(grid[r][c-3] != null && grid[r-1][c-3] != null && grid[r-2][c-3] !=null && grid[r-3][c-3] == null){
+                            return c-3;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorOpposite) && grid[r-3][c-3]!= null && grid[r-3][c-3].equals(colorOpposite)){ //third spot empty
+                        if(grid[r][c-2] != null && grid[r-1][c-2] !=null && grid[r-2][c-2] == null){
+                            return c-2;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorOpposite) && grid[r-3][c-3]!= null && grid[r-3][c-3].equals(colorOpposite)){//second spot empty
+                        if(grid[r][c-1] !=null && grid[r-1][c-1] == null){
+                            return c-1;
+                        }
+                    }
+                    if(grid[r-3][c-3] != null && grid[r-3][c-3].equals(colorOpposite) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorOpposite) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorOpposite)){//first spot empty
+                        if(grid[r][c-3] != null && grid[r-1][c-3] != null && grid[r-2][c-3] != null && grid[r-3][c-3] == null){
+                            return c-3;
+                        }
+                    }
+                }
+                //also diagonal but other way
+                if(c<4 && r>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-1][c+1] != null && grid[r-1][c+1].equals(colorOpposite) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorOpposite)){ //fourth spot empty
+                        if(grid[r][c+3] != null && grid[r-1][c+3] != null && grid[r-2][c+3] != null && grid[r-3][c+3] == null){
+                            return c+3;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-1][c+1]!= null && grid[r-1][c+1].equals(colorOpposite) && grid[r-3][c+3]!= null && grid[r-3][c+3].equals(colorOpposite)){ //third spot empty
+                        if(grid[r][c+2] !=null && grid[r-1][c+2] != null && grid[r-2][c+2] == null){
+                            return c+2;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorOpposite) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorOpposite) && grid[r-3][c+3]!= null && grid[r-3][c+3].equals(colorOpposite)){ //second spot empty
+                        if(grid[r][c+1] != null && grid[r-1][c+1] == null){
+                            return c+1;
+                        }
+                    }
+                    if(grid[r-1][c+1] != null && grid[r-1][c+1].equals(colorOpposite) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorOpposite) && grid[r-3][c+3] != null && grid[r-3][c+3].equals(colorOpposite)){ //first spot empty
+                        if(grid[r][c] == null){
+                            return c;
+                        }
+                    }
+                }  
+            }
+        }
+        return 200;
+    }
+    
+    public int checkWinningPlayBlack()
+    {
+        String colorInitial = new String("b"); //fills the 2d array grid with this value
+        
+        for(int r = grid.length-1; r >= 0; r--)
+        {
+            for(int c = grid[0].length-1; c >=0; c--)
+            {
+                //horizontal check
+                if(c<6 && c>2)
+                {
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r][c-1]!= null && grid[r][c-1].equals(colorInitial) && grid[r][c-2]!= null && grid[r][c-2].equals(colorInitial))
+                    {
+                        if(grid[r][c-3] == null )
+                        {
+                            return c-3;
+                        }
+                        else if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                if(c<6 && c>1){
+                    if(grid[r][c+1] != null && grid[r][c+1].equals(colorInitial) && grid[r][c-1] != null && grid[r][c-1].equals(colorInitial) && grid[r][c-2] != null && grid[r][c-2].equals(colorInitial))
+                    {
+                        if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                if(c<5 && c>1){
+                    if(grid[r][c+1] != null && grid[r][c+1].equals(colorInitial) && grid[r][c+2] != null && grid[r][c+2].equals(colorInitial) && grid[r][c-1] != null && grid[r][c-1].equals(colorInitial))
+                    {
+                        if(grid[r][c+1] == null)
+                        {
+                            return c+1;
+                        }
+                    }
+                }
+                //vertical check
+                if(r>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-1][c] != null && grid[r-1][c].equals(colorInitial) && grid[r-2][c] != null && grid[r-2][c].equals(colorInitial) && grid[r-3][c] == null)
+                    {
+                        return c;
+                    }
+                }
+                //diagonal check
+                if(r>2 && c>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorInitial) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorInitial)){ //fourth spot empty
+                        if(grid[r][c-3] != null && grid[r-1][c-3] != null && grid[r-2][c-3] !=null && grid[r-3][c-3] == null){
+                            return c-3;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorInitial) && grid[r-3][c-3]!= null && grid[r-3][c-3].equals(colorInitial)){ //third spot empty
+                        if(grid[r][c-2] != null && grid[r-1][c-2] !=null && grid[r-2][c-2] == null){
+                            return c-2;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorInitial) && grid[r-3][c-3]!= null && grid[r-3][c-3].equals(colorInitial)){//second spot empty
+                        if(grid[r][c-1] !=null && grid[r-1][c-1] == null){
+                            return c-1;
+                        }
+                    }
+                    if(grid[r-3][c-3] != null && grid[r-3][c-3].equals(colorInitial) && grid[r-1][c-1]!= null && grid[r-1][c-1].equals(colorInitial) && grid[r-2][c-2]!= null && grid[r-2][c-2].equals(colorInitial)){//first spot empty
+                        if(grid[r][c-3] != null && grid[r-1][c-3] != null && grid[r-2][c-3] != null && grid[r-3][c-3] == null){
+                            return c-3;
+                        }
+                    }
+                }
+                //also diagonal but other way
+                if(c<4 && r>2){
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-1][c+1] != null && grid[r-1][c+1].equals(colorInitial) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorInitial)){ //fourth spot empty
+                        if(grid[r][c+3] != null && grid[r-1][c+3] != null && grid[r-2][c+3] != null && grid[r-3][c+3] == null){
+                            return c+3;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-1][c+1]!= null && grid[r-1][c+1].equals(colorInitial) && grid[r-3][c+3]!= null && grid[r-3][c+3].equals(colorInitial)){ //third spot empty
+                        if(grid[r][c+2] !=null && grid[r-1][c+2] != null && grid[r-2][c+2] == null){
+                            return c+2;
+                        }
+                    }
+                    if(grid[r][c] != null && grid[r][c].equals(colorInitial) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorInitial) && grid[r-3][c+3]!= null && grid[r-3][c+3].equals(colorInitial)){ //second spot empty
+                        if(grid[r][c+1] != null && grid[r-1][c+1] == null){
+                            return c+1;
+                        }
+                    }
+                    if(grid[r-1][c+1] != null && grid[r-1][c+1].equals(colorInitial) && grid[r-2][c+2] != null && grid[r-2][c+2].equals(colorInitial) && grid[r-3][c+3] != null && grid[r-3][c+3].equals(colorInitial)){ //first spot empty
+                        if(grid[r][c] == null){
+                            return c;
+                        }
+                    }
+                }  
+            }
+        }
+        return 200;
+    }
